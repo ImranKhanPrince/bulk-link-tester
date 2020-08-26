@@ -1,8 +1,9 @@
+//pile of trash starts here
+
 var readline = require('readline');
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
-const { RSA_X931_PADDING } = require('constants');
 // var Promise = require('promise');
 
 fs.writeFile('ftpserver.html', '', { flag: 'a+' }, err => {
