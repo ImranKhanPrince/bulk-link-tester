@@ -16,25 +16,26 @@ function linkRefiner(mixedTextString) {
     const reCombination = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/g;
     return mixedTextString.match(reCombination);
 }
+
 function testlink(url) {
     const method = url.split('://')[0];
 
     return new Promise((resolve, reject) => {
         if (method == 'http') {
-            http.get(url, function (res) {
+            http.get(url, function(res) {
                 // console.log(url, res.statusCode);
-                resolve(`<a href="${url}">${url} ${res.statusCode}</a> \n`); //true 1 parameter
-            }).on('error', function (e) {
-                resolve(`${url} ${e} \n`);
+                resolve(`<a href="${url}">${url} ${res.statusCode}</a> <br> \n`); //true 1 parameter
+            }).on('error', function(e) {
+                resolve(`${url} ${e} <br> \n`);
             });
         } else if (method == 'https') {
             https
-                .get(url, function (res) {
+                .get(url, function(res) {
                     // console.log(url, res.statusCode);
-                    resolve(`<a href="${url}">${url} ${res.statusCode}</a> \n`);
+                    resolve(`<a href="${url}">${url} ${res.statusCode}</a><br> \n`);
                 })
-                .on('error', function (e) {
-                    resolve(`${url} ${e}\n`);
+                .on('error', function(e) {
+                    resolve(`${url} ${e} <br>\n`);
                 });
         } else {
             console.log('invalid');
