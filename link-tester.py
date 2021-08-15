@@ -2,10 +2,18 @@ import re
 import requests
 import concurrent.futures
 import winsound
+import sys, os 
+
+#function to make path relative to absolute 
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 def get_link(filename="links_with_other_words.txt"):
   pattern = r"((http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?)"
 
+  filename = resource_path(filename)
   with open(filename,'r',encoding="utf-8",) as f:
     buffer = f.read()
   jumbled_text= buffer.replace("\n", " ")
@@ -48,6 +56,9 @@ def main():
                 padding: 0;
                 box-sizing: border-box;
             }
+            html{
+              background:#e9e9e9;
+            }
             ol {
                 margin: 1rem;
                 padding: 1rem;
@@ -73,7 +84,7 @@ def main():
             }
             .success {
                 background: #42a148;
-                color: white;
+                color: #ececec;
             }
             .success:hover {
                 background: #3cfc49;
@@ -90,7 +101,7 @@ def main():
             }
             .failed {
                 background: #ff7961;
-                color: white;
+                color: #ececec;
                 cursor: not-allowed;
             }
             .failed a {
@@ -100,7 +111,7 @@ def main():
 </head>
 <body>
   <ol>
-   <!-- this is line 66 it'll change when you add css look at line 56 for context -->
+   <!-- this is line 69 it'll change when you add css look at line 56 for context -->
   </ol>
 </body>
 </html>""".split("\n")
@@ -108,8 +119,8 @@ def main():
   # make an html file that shows active and inactive link
   with open("files.html","w+",encoding="utf-8") as f:
     for x in result:
-      insert_element = f'<li class="{"success" if x[1]==200 else "redirected" if x[1]==403 else "failed" }"> {x[1]}-><a  href="{x[0]}" target="_blank">{x[0]}</a> </li>'
-      html_basic.insert(65,insert_element)
+      insert_element = f'<li class="{"success" if x[1]==200 else "redirected" if x[1]==403 else "failed" }"> <a  href="{x[0]}" target="_blank">{x[0]} </a> </li>'
+      html_basic.insert(68,insert_element)
     file_content = "".join(html_basic)
     f.write(str(file_content))
 
