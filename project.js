@@ -61,7 +61,9 @@ function textFileProcessor(filename) {
         linkArray.forEach(link => {
             testlink(link).then(link => {
                 fs.writeFile('ftpserver.html', link, { flag: 'a+' }, err => {
-                    console.log(err + '2');
+                    if(err){
+                        console.log(err + '2');
+                    }
                 });
             });
         });
